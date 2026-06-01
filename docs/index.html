@@ -1,0 +1,576 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liz Vieira Mesquita | Portfólio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #121414;
+            --bg-card: #1a1d1d;
+            --teal-primary: #148588;
+            --teal-glow: #20b2b6;
+            --text-light: #f0f4f4;
+            --text-body:  #c8d0d0;
+            --text-muted: #8fa8a8;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-body);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            letter-spacing: -0.01em;
+            background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 0);
+            background-size: 4px 4px;
+        }
+
+        h1, h2, h3, h4, .font-serif {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            color: #7ec8a0;
+        }
+
+        a { color: var(--teal-primary); text-decoration: none; transition: color 0.3s ease; }
+        a:hover { color: var(--teal-glow); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .animated-section { animation: fadeInUp 1s ease forwards; }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: rgba(18, 20, 20, 0.95) !important;
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(20, 133, 136, 0.15);
+        }
+        .navbar-brand {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-style: italic;
+            color: var(--text-light) !important;
+            letter-spacing: 1px;
+        }
+        .nav-link {
+            color: var(--text-body) !important;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--teal-glow) !important; }
+
+        /* HOME */
+        .hero-section { padding-top: 120px; padding-bottom: 80px; }
+        .mosaic-container { display: flex; flex-direction: column; gap: 24px; }
+        .mosaic-card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 0;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .mosaic-card:hover { transform: translateY(-5px); border-color: rgba(20, 133, 136, 0.4); }
+        .mosaic-card p.text-muted { color: var(--text-body) !important; }
+        .mosaic-card span.text-muted { color: var(--text-muted) !important; }
+        .mosaic-card h3 { color: #3e828e !important; }
+        .mosaic-1 { min-height: 450px; }
+        .mosaic-2 { min-height: 380px; margin-top: 40px; }
+        .mosaic-3 { min-height: 420px; }
+        @media (max-width: 768px) { .mosaic-2 { margin-top: 0; } }
+
+        /* ── SOBRE MIM ── */
+        .about-section {
+            padding: 100px 0;
+            background-color: #161919;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .about-section p.text-muted  { color: var(--text-body) !important; }
+        .about-section span.text-muted { color: var(--text-muted) !important; }
+        .about-section h6.text-muted  { color: var(--text-muted) !important; }
+        .about-section p.small        { color: var(--text-body) !important; }
+
+        /* Quadro da foto — mesmo mecanismo dos cards de projeto */
+        .about-photo-frame {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            border: 1px solid rgba(20, 133, 136, 0.2);
+            background-color: #1e2222;
+            /* fallback: centraliza o texto quando não há foto */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* A foto preenche o quadro sem distorcer — troque o src para colocar sua imagem */
+        .about-photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;       /* recorta cobrindo o quadro inteiro */
+            object-position: center top; /* prioriza rosto/parte superior */
+            display: block;
+            position: absolute;
+            inset: 0;
+        }
+
+        /* Legenda discreta no canto inferior — some quando há foto (opcional: remova se quiser) */
+        .about-photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 28px 20px 14px;
+            background: linear-gradient(to top, rgba(12,16,16,0.72) 0%, transparent 100%);
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 0.82rem;
+            color: rgba(200, 208, 208, 0.7);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        /* Texto placeholder visível somente quando NÃO há foto */
+        .about-photo-placeholder-text {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1rem;
+            z-index: 1;
+            /* some quando há imagem (a imagem fica por cima via position:absolute) */
+        }
+
+        /* ── PROJETOS ── */
+        .project-section { padding: 80px 0; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover { border-color: var(--teal-primary); }
+        .card .card-title { color: #3e828e !important; }
+        .card .card-title a { color: #3e828e !important; transition: color 0.3s ease; }
+        .card .card-title a:hover { color: var(--teal-glow) !important; }
+
+        .media-thumb {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            background-color: #1e2424;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
+            display: block;
+        }
+        .media-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.4s ease, opacity 0.3s ease;
+            opacity: 0.88;
+        }
+        .media-thumb:hover img { transform: scale(1.05); opacity: 1; }
+        .media-thumb .thumb-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(12, 16, 16, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .media-thumb:hover .thumb-overlay { opacity: 1; }
+        .play-icon {
+            width: 50px; height: 50px;
+            border: 2px solid var(--teal-glow);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .play-icon svg { fill: var(--teal-glow); margin-left: 4px; }
+        .play-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--teal-glow); }
+
+        .card-body { padding: 24px 28px; display: flex; flex-direction: column; flex: 1; }
+        .card-text.text-muted { color: var(--text-body) !important; }
+
+        .badge-teal {
+            background-color: rgba(20, 133, 136, 0.2);
+            color: var(--teal-glow);
+            border: 1px solid var(--teal-primary);
+            border-radius: 0;
+            padding: 5px 11px;
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+
+        .btn-outline-teal {
+            color: var(--teal-glow);
+            border: 1px solid var(--teal-primary);
+            border-radius: 0;
+            padding: 10px 24px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .btn-outline-teal:hover { background-color: var(--teal-primary); color: var(--text-light); }
+
+        /* ── PRÊMIOS ── */
+        .awards-mini {
+            padding: 72px 0 80px;
+            background-color: #131616;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .awards-mini::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+                90deg,
+                rgba(20,133,136,0.03) 0px, rgba(20,133,136,0.03) 1px,
+                transparent 1px, transparent 80px
+            );
+            pointer-events: none;
+        }
+        .award-row {
+            display: grid;
+            grid-template-columns: 56px 1fr auto;
+            gap: 0 20px;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.2s ease;
+        }
+        .award-row:first-of-type { border-top: 1px solid rgba(255,255,255,0.04); }
+        .award-row:hover { background: rgba(20,133,136,0.04); }
+        .award-year-col {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 0.85rem;
+            color: var(--teal-glow);
+            letter-spacing: 1px;
+        }
+        .award-info { display: flex; flex-direction: column; gap: 2px; }
+        .award-name { font-family: var(--font-serif); font-size: 1rem; color: var(--text-light); font-weight: 700; }
+        .award-event { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; }
+        .award-work { font-size: 0.78rem; color: var(--text-body); font-style: italic; margin-top: 2px; }
+        .badge-mini {
+            font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.5px;
+            padding: 4px 9px; border: 1px solid; white-space: nowrap;
+        }
+        .badge-mini.premio  { color: #7ec8a0; border-color: rgba(126,200,160,0.4); background: rgba(126,200,160,0.08); }
+        .badge-mini.selecao { color: var(--teal-glow); border-color: rgba(20,133,136,0.4); background: rgba(20,133,136,0.08); }
+        .badge-mini.participacao { color: var(--text-muted); border-color: rgba(143,168,168,0.3); background: transparent; }
+
+        /* CONTATO */
+        .contact-section { padding: 100px 0; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .contact-section p.text-muted { color: var(--text-body) !important; }
+        p.lead.text-light { color: var(--text-light) !important; }
+
+        /* FOOTER */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--text-body);
+        }
+        footer p.text-muted { color: var(--text-muted) !important; }
+
+        @media (max-width: 576px) {
+            .award-row { grid-template-columns: 44px 1fr; }
+            .badge-mini { display: none; }
+            .about-photo-frame { height: 320px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">L.V.M</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#home">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sobre">Sobre Me</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projetos">Projetos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME -->
+    <section id="home" class="hero-section animated-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-8">
+                    <span class="text-uppercase d-block mb-2" style="color:#a0bfbf;letter-spacing:3px;font-size:0.65rem;">// PORTFÓLIO DE CINEMA & FOTOGRAFIA</span>
+                    <h1 class="display-3 mb-3">Liz Vieira Mesquita</h1>
+                    <p class="lead text-light font-serif italic" style="font-size:1.5rem;">Estudante de Cinema e Audiovisual</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 mosaic-container">
+                    <div class="mosaic-card mosaic-1">
+                        <div>
+                            <span class="text-muted small d-block mb-3">01 / ESTÉTICA</span>
+                            <h3 class="mb-3">Cinema, Fotografia e Narrativas Visuais</h3>
+                            <p class="text-muted small">Interesse em direção de arte, fotografia e construção de atmosferas visuais.</p>
+                        </div>
+                        <div><a href="#sobre" class="btn btn-outline-teal w-100">Trajetória</a></div>
+                    </div>
+                </div>
+                <div class="col-md-4 mosaic-container">
+                    <div class="mosaic-card mosaic-2">
+                        <div>
+                            <span class="text-muted small d-block mb-3">02 / TRABALHOS</span>
+                            <h3 class="mb-3">Narrativas Visuais</h3>
+                            <p class="text-muted small">Busco formas de contar histórias através de imagens, vídeos, ilustrações e sons para conseguir transmitir informações e emoções.</p>
+                        </div>
+                        <div><a href="#projetos" class="btn btn-outline-teal w-100">Ver Projetos</a></div>
+                    </div>
+                </div>
+                <div class="col-md-4 mosaic-container">
+                    <div class="mosaic-card mosaic-3">
+                        <div>
+                            <span class="text-muted small d-block mb-3">03 / CONEXÃO</span>
+                            <h3 class="mb-3">Vamos criar algo juntos?</h3>
+                            <p class="text-muted small">Disponível para colaboração em fotografia e arte, independente da atuação.</p>
+                        </div>
+                        <div><a href="#contato" class="btn btn-outline-teal w-100">Entrar em Contato</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE MIM -->
+    <section id="sobre" class="about-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+
+                <div class="col-md-5">
+                    <!--
+                    ╔══════════════════════════════════════════════════════╗
+                    ║  FOTO DE PERFIL                                      ║
+                    ║                                                      ║
+                    ║  Para adicionar sua foto, troque:                    ║
+                    ║    src="NOME_DA_SUA_FOTO.jpg"                        ║
+                    ║  pelo nome real do arquivo (deve estar na mesma      ║
+                    ║  pasta que este HTML).                               ║
+                    ║                                                      ║
+                    ║  object-position: center top → prioriza o rosto.    ║
+                    ║  Mude para "center center" se preferir centralizar   ║
+                    ║  no meio da imagem.                                  ║
+                    ╚══════════════════════════════════════════════════════╝
+                    -->
+                    <div class="about-photo-frame">
+
+                        <img src="Eu2.jpeg" alt="Liz Vieira Mesquita">
+
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <span class="text-uppercase text-muted small d-block mb-2">// BIOGRAFIA</span>
+                    <h2 class="display-5 mb-4">Sobre Mim</h2>
+                    <p class="lead text-light font-serif italic mb-4">
+                        Sou estudante de cinema e audiovisual, atualmente cursando o primeiro semestre, movida pela busca de capturar a densidade do tempo e das emoções.
+                    </p>
+                    <p class="text-muted">
+                        Comecei a me interessar pela área muito cedo, fazendo vídeos e documentários pessoais. Gosto e tenho muita atenção em guardar memórias, por isso dedico boa parte da minha vida em analisar como o audiovisual pode ajudar o ser humano a se conectar consigo mesmo e o exterior do mundo.
+                        Busco aprender mais sobre narrativas visuais, seu alcance como interpretação e análise do mundo e como ela pode impactar a vida das pessoas.
+                    </p>
+                    <div class="row mt-4 pt-3 border-top border-secondary">
+                        <div class="col-6">
+                            <h6 class="text-uppercase text-muted small">Atuação</h6>
+                            <p class="small">Direção de Arte / Direção e assistente de Fotografia</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJETOS -->
+    <section id="projetos" class="project-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-10">
+                    <h2 class="display-5">Projetos Selecionados</h2>
+                    <div style="width:60px;height:2px;background-color:var(--teal-primary);margin-top:15px;"></div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- CARD 1 -->
+                <div class="col-md-4 col-sm-6 d-flex">
+                    <div class="card w-100">
+                        <a class="media-thumb" href="https://youtu.be/XlteI6hC-is?si=ROEjn7xjjkwEHnVr" target="_blank" rel="noopener">
+                            <img src="NewYork1.jpg" alt="Nova York — Mesquitas e Peixotos">
+                            <div class="thumb-overlay">
+                                <div class="play-icon"><svg width="16" height="16" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg></div>
+                                <span class="play-label">Assistir</span>
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <div class="mb-2"><span class="badge badge-teal">Documentário</span></div>
+                            <h4 class="card-title my-2">Nova York — Mesquitas e Peixotos</h4>
+                            <p class="card-text text-muted small">Um dos longas produzidos quase inteiramente por mim, com a intenção principal de guardar memórias, mas que se transforma em um produto audiovisual que explora vivências, paleta de cores, som, fotografia, edição e cultura.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2 -->
+                <div class="col-md-4 col-sm-6 d-flex">
+                    <div class="card w-100">
+                        <a class="media-thumb" href="https://youtu.be/XfEQ_03VEY4?si=MLVgIIVNQnM6WU-Z" target="_blank" rel="noopener">
+                            <img src="NewYork2.webp" alt="Nova York — 2ª parte">
+                            <div class="thumb-overlay">
+                                <div class="play-icon"><svg width="16" height="16" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg></div>
+                                <span class="play-label">Assistir</span>
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <div class="mb-2"><span class="badge badge-teal">Documentário</span></div>
+                            <h4 class="card-title my-2">Nova York — 2ª parte</h4>
+                            <p class="card-text text-muted small">Mais uma da série que mostra a história de duas famílias viajando por Nova Iorque. Extensão do primeiro produto, onde continuo na criação e pós, buscando narrativas e fotos para mesclar cultura e história de forma clara.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3 -->
+                <div class="col-md-4 col-sm-6 d-flex">
+                    <div class="card w-100">
+                        <a class="media-thumb" href="https://youtu.be/9B7fPAu9ktw?si=PTmPgoudmtPOKvQO" target="_blank" rel="noopener">
+                            <img src="Iguais a mim2.jpeg" alt="Iguais a Mim">
+                            <div class="thumb-overlay">
+                                <div class="play-icon"><svg width="16" height="16" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg></div>
+                                <span class="play-label">Assistir</span>
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <div class="mb-2"><span class="badge badge-teal">Filme Estudantil</span></div>
+                            <h4 class="card-title my-2">Iguais a Mim</h4>
+                            <p class="card-text text-muted small">A história de uma universitária que enfrenta vários conflitos e passa por uma fase de autoconhecimento. Uma história criada por alunos do ensino médio que utiliza sonhos e cores para refletir questões sociais e descobertas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 4 -->
+                <div class="col-md-4 col-sm-6 d-flex">
+                    <div class="card w-100">
+                        <a class="media-thumb" href="https://youtu.be/2nN_IPnUbUg" target="_blank" rel="noopener">
+                            <img src="Sussurros da saldade.jpeg" alt="Sussurros da Saudade">
+                            <div class="thumb-overlay">
+                                <div class="play-icon"><svg width="16" height="16" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg></div>
+                                <span class="play-label">Assistir</span>
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <div class="mb-2"><span class="badge badge-teal">Projeto Acadêmico</span></div>
+                            <h4 class="card-title my-2">Sussurros da Saudade</h4>
+                            <p class="card-text text-muted small">Em um trabalho da faculdade que busca um plano desejo, uma mãe se vê incompleta após seu filho se mudar de cidade.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 5 -->
+                <div class="col-md-4 col-sm-6 d-flex">
+                    <div class="card w-100">
+                        <a class="media-thumb" href="https://vimeo.com/1189620818?share=copy&fl=sv&fe=ci" target="_blank" rel="noopener">
+                            <img src="Narciso.jpeg" alt="Flores para Narciso">
+                            <div class="thumb-overlay">
+                                <div class="play-icon"><svg width="16" height="16" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg></div>
+                                <span class="play-label">Assistir</span>
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <div class="mb-2"><span class="badge badge-teal">Projeto Acadêmico</span></div>
+                            <h4 class="card-title my-2">Flores para Narciso</h4>
+                            <p class="card-text text-muted small">Um curta-metragem que traz uma interpretação contemporânea do conto Narciso.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 6 -->
+                <div class="col-md-4 col-sm-6 d-flex">
+                    <div class="card w-100">
+                        <a class="media-thumb" href="https://youtu.be/ZbuC7qdETBs?si=hlwcqlawhQYihQkG" target="_blank" rel="noopener">
+                            <img src="BelezaMorta2.jpeg" alt="Beleza Morta">
+                            <div class="thumb-overlay">
+                                <div class="play-icon"><svg width="16" height="16" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg></div>
+                                <span class="play-label">Assistir</span>
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <div class="mb-2"><span class="badge badge-teal">Projeto Acadêmico</span></div>
+                            <h4 class="card-title my-2">Beleza Morta</h4>
+                            <p class="card-text text-muted small">Uma videoarte em formato de Stop Motion que usa flores, sons e cores para fazer uma crítica à crise climática e ao desmatamento causados pelo ser humano.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="contact-section">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <span class="text-uppercase small d-block mb-2" style="color:#a0bfbf;letter-spacing:3px;font-size:0.65rem;">// CANAIS ABERTOS</span>
+                    <h2 class="display-5 mb-4">Vamos conversar?</h2>
+                    <p class="text-muted mb-5">Seja para propor um novo projeto cinematográfico, ensaio fotográfico ou apenas trocar referências sobre cinema e estética.</p>
+                    <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                        <a href="mailto:lizvieiramesquita@gmail.com" class="btn btn-outline-teal px-4 py-3">lizvieiramesquita@gmail.com</a>
+                        <a href="https://instagram.com/lizzz_vm" target="_blank" class="btn btn-outline-teal px-4 py-3">@lizzz_vm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 Liz Vieira Mesquita. Todos os direitos reservados.</p>
+ 
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
